@@ -26,11 +26,23 @@ During your challenge, you will be pulled aside by a PM for a 5 minute interview
 
 Explain in detail the workings of a dynamic array:
 * What is the runtime complexity to access an array, add or remove from the front, and add or remove from the back?
+
+Access an Array: 0(1): 
+ADD or remove rom front is 0(n): shift or copy the array to change the 0 index
+Add or remove from back: 0(1): 0(1) simple push/pop
+
+
 * What is the worse case scenario if you try to extend the storage size of a dynamic array?
 
-Explain how blockchain networks remain in consensus:
-* What does a node do if it gets a message from another in the network with a new block?
-* Why can't someone cheat by changing a transaction from an earlier block to give themselves coins?
+you get the 0(n) runtime [ADD or remove rom front is 0(n): shift or copy the array to change the 0 index]
+
+Explain how a blockchain is structured. What are the blocks, what is the chain? How is the data organized?
+
+A blockchain consists of multiple blocks, each block has a previous hash, transactions, id, proof and a timestamp. Each block is connected by it's previous hash, which is created by taking the previous block's previous-hash and proof and rehashing it. Together the blocks create a chain. 
+
+Explain how proof of work functions. How does it operate. How does this protect the chain from attack. What kind of attack is possible?
+
+Proof of work is a function that takes the last_block's proof and compares continuously through a cycle of set numbers that are passed through to the valid_proof function. The valid proof takes each number and compares it to a validation, or a certain requirement the number should have to pass.  I would say if a group of miners have over 50% of the computer power that is working with a proof of work then they could take over all the transactions.
 
 ## Project Set Up
 
