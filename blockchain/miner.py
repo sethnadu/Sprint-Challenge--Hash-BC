@@ -24,7 +24,18 @@ def proof_of_work(last_proof):
 
     print("Searching for next proof")
     proof = 0
-    #  TODO: Your code here
+    proof_minus = last_proof
+    proof_plus =  last_proof
+    # Start from the last_proof and if plus or minus the proof is false, plus and minus each variable
+    # Then recheck to see if it then returns true with the changed amount
+    while valid_proof(last_proof, proof_plus) is False and valid_proof(last_proof, proof_minus) is False:
+        proof_minus -= 1
+        proof_plus += 1
+
+        if valid_proof(last_proof, proof_minus) is True:
+            proof = valid_proof(last_proof, proof_minus)
+        elif valid_proof(last_proof, proof_plus) is True:
+            proof = valid_proof(last_proof, proof_plus)
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -38,6 +49,14 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
+    # Split both parameters and encoded them to get the last proof and one Im testing against
+    guess = f"{proof}".encode()
+    guess_hash = hashlib.sha256(guess).hexdigest()
+    guess_two = f"{last_hash}".encode()
+    guess_hash_two = hashlib.sha256(guess_two).hexdigest()
+
+    return guess_hash[:6] == guess_hash_two[-6]
+
 
     # TODO: Your code here!
     pass
@@ -65,7 +84,18 @@ if __name__ == '__main__':
     while True:
         # Get the last proof from the server
         r = requests.get(url=node + "/last_proof")
+        # ERROR WITH DATA USING TEST ENDPOINT
         data = r.json()
+
+        # try: 
+        #     # data = r.json().get('proof')
+        #     print(data)
+        # except ValueError:
+        #     print("Error:  Non-json response")
+        #     print("Response returned:")
+        #     print(r)
+        #     break
+
         new_proof = proof_of_work(data.get('proof'))
 
         post_data = {"proof": new_proof,
