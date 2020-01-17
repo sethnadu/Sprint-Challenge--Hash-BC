@@ -23,23 +23,23 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = 0
+    proof = random.randint(0, sys.maxsize / 1000)
 
-    # while valid_proof(last_proof, proof) is False:
-    #     proof += int(random.random() * 10)
-    proof_minus = last_proof
-    proof_plus =  last_proof
+    while valid_proof(last_proof, proof) is False:
+        proof += 1
+    # proof_minus = last_proof
+    # proof_plus =  last_proof
     # Start from the last_proof and if plus or minus the proof is false, plus and minus each variable
     # Then recheck to see if it then returns true with the changed amount
-    while valid_proof(last_proof, proof_plus) is False and valid_proof(last_proof, proof_minus) is False:
-        # proof_minus -= int(random.random() * 10)
-        proof_minus -= 1
-        # proof_plus += int(random.random() * 10)
-        proof_plus += 1
-        if valid_proof(last_proof, proof_plus) is True:
-            proof = proof_plus
-        elif valid_proof(last_proof, proof_minus) is True:
-            proof = proof_minus
+    # while valid_proof(last_proof, proof_plus) is False and valid_proof(last_proof, proof_minus) is False:
+    #     # proof_minus -= int(random.random() * 10)
+    #     proof_minus -= 1
+    #     # proof_plus += int(random.random() * 10)
+    #     proof_plus += 1
+    #     if valid_proof(last_proof, proof_plus) is True:
+    #         proof = proof_plus
+    #     elif valid_proof(last_proof, proof_minus) is True:
+    #         proof = proof_minus
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
